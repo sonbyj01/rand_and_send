@@ -37,8 +37,14 @@ class RandAndSend:
             exit()
 
     def _send(self, to_email):
-        self.from_email = ''
-        self.from_password = ''
+        try:
+            with open('.credentials', 'r') as f:
+                self.from_email = f.readline()
+                self.from_password = f.readline()
+        except FileNotFoundError as fnf:
+            print(fnf)
+            exit()
+
         self.from_port = 465  # SSL
 
         # set up email packet
