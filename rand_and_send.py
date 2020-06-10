@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import smtplib
 import ssl
@@ -16,6 +16,7 @@ class RandAndSend:
         try:
             with open('data.pickle', 'rb') as f:
                 self.data = pickle.load(f)
+                print(self.data)f
         except FileNotFoundError as fnf:
             print(fnf)
             self.data = []
@@ -50,14 +51,14 @@ class RandAndSend:
         # set up email packet
         self.message = MIMEMultipart('alternative')
         self.message['Subject'] = 'Daily Prayer Request'
-        self.message['From'] = 'Yale CCM'
+        self.message['From'] = 'Prayer Request'
         self.message['To'] = to_email
 
         # set up message
         self.text = """\
         Hey you, today's your day!
-        Fill the Google Form: 
-        https://forms.gle/DtWc45XXhaznpS939
+        Fill the Google Form for tonight's prayer: 
+        https://forms.gle/blahblahblah
         """
 
         self.part = MIMEText(self.text, 'plain')
@@ -75,7 +76,7 @@ class RandAndSend:
 
 
 def main():
-    RandAndSend('file.txt').run()
+    RandAndSend('emails.txt').run()
 
 
 if __name__ == '__main__':
