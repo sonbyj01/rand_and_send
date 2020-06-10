@@ -9,7 +9,10 @@ The objective is to maintain secrecy on who fills out the Google Form. A cron ta
 soon so it will send at the same time daily. I will also add an error checking mechanism just in case
 the email fails the first time. 
 
-## Using this script
+## Requirements
+No requirements are needed. All the libraries should already be installed. 
+
+## Using this program
 ### '.credentials'
 Create a '.credentials' file within the same directory as the script, which should contain the following information:
 ```
@@ -40,4 +43,5 @@ test3@hotmail.com
 - [x] randomly pick an email from list (waiting for the list...)
 - [x] error checking just in case failed to connect to socket 
 - [x] crontab script
+- [ ] add other email domain smtp things
 - [ ] make a more comprehensive README.md
