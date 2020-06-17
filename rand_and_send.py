@@ -10,13 +10,12 @@ from email.mime.multipart import MIMEMultipart
 
 
 class RandAndSend:
-    def __init__(self, addresses_text):
+    def __init__(self, addresses_text=None):
         # loads existing pickle file that contains updated list of addresses to choose from
         # otherwise create a new list of addresses from text file specified
         try:
             with open('data.pickle', 'rb') as f:
                 self.data = pickle.load(f)
-                print(self.data)f
         except FileNotFoundError as fnf:
             print(fnf)
             self.data = []
@@ -24,10 +23,19 @@ class RandAndSend:
                 content = f.readlines()
                 self.data = [x.strip() for x in content]
 
-    def run(self):
-        self._send(self._select())
+    def add_new_emails(self, new_emails):
+        with open(new_emails, 'r') as f:
+            content = f.readlines()
+            self.data.extend([x.strip() for x in content])
+        self._dump_pickle()
+
+    def _dump_pickle(self):
         with open('data.pickle', 'wb') as f:
             pickle.dump(self.data, f)
+
+    def run(self):
+        self._send(self._select())
+        self._dump_pickle()
 
     def _select(self):
         try:
@@ -58,7 +66,7 @@ class RandAndSend:
         self.text = """\
         Hey you, today's your day!
         Fill the Google Form for tonight's prayer: 
-        https://forms.gle/blahblahblah
+        https://forms.gle/4VzjZjRuxV1CTN1V9
         """
 
         self.part = MIMEText(self.text, 'plain')
